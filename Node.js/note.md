@@ -240,7 +240,7 @@ npm install express
 
 ## ลองเทียบ code แบบ ใช้ กับ ไม่ใช้ express
 **ไม่ใช้ express (nodejs ปกติ)**
-```json
+```js
 const http = require('http')
 
 // Sample book data
@@ -269,7 +269,7 @@ server.listen(port, () => {
 })
 ```
 **กับใช้ express**
-```json
+```js
 const express = require('express')
 const app = express()
 
