@@ -28,7 +28,7 @@
 เราจะเริ่มต้นสร้าง http server กัน ในการทำ Backend นั้นเริ่มแรกสุดเราต้องทำการ run server ขึ้นมาเพื่อเป็นเครื่องที่เป็นตัวแทนสำหรับการพูดคุยระหว่าง browser และ server (ตัวเครื่องที่วาง nodejs อยู่)
 
 ที่ไฟล์ index.js ให้เราเพิ่มไฟล์ไปตามนี้
-```sql
+```js
 // ทำการ import http เข้ามาเพื่อทำการ run server
 const http = require('http')
 
