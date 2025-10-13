@@ -537,8 +537,29 @@ app.listen(port, (req, res) => {
 **result GET**
 ![alt text](img/image-3.png)
 
+แล้วถ้าเพิ่มส่วนนี้เข้าไปจะทำให้นับไอดีแบบออโต้ตอน POST ด้วย
+```js
+// path  = POST /user
+app.post('/user', (req, res) =>{
+  //รับ user ที่ส่งเข้ามาผ่าน body
+  let user = req.body
+  user.id = counter //เพิ่มให้ user มี id เป็น atb <-----
+
+  counter += 1 //นับ id 
+  console.log('user', user)
+
+  //เอาข้อมูลไปเก็บใน array
+  users.push(user)
+  res.json({
+    message: 'add ok',
+    user: user //show json ที่ส่งเข้ามา
+  })
+```
+**result POST with counting ID**
+![alt text](img/image-4.png)
+
 ## 3. PUT - update existing resource
-PUT Method เป็น method ที่ใช้สำหรับการแก้ข้อมูลเดิมในระบบ โดยจะเป็นการเข้าถึงทุก field
+PUT Method เป็น method ที่ใช้สำหรับการแก้ข้อมูลเดิมในระบบ โดยจะ **เป็นการเข้าถึงทุก field**
 - PUT ส่งผ่าน (/: )param เป็นการดึงค่าจาก url
 
 ในนี้จะมีการใช้ parameter ที่ส่งมาผ่าน url เพื่อบอกว่าเป็น user คนไหน
@@ -571,11 +592,88 @@ app.put('/user/:id', (req, res) => {
   res.json({ message: 'User updated successfully', user: userToUpdate })
 })
 ```
+**example PUT 2**
+```js
+//import library
+const express = require('express')
+const app = express()
+
+const bodyparser = require('body-parser')
+app.use(bodyparser.json())
+
+const port = 8000
 
 
+// สำหรับเก็บ user
+let users = []
+let counter = 1
+
+//path = GET /users
+app.get('/users', (req, res) => {
+  res.json(users)
+})
+
+// path  = POST /user
+app.post('/user', (req, res) =>{
+  //รับ user ที่ส่งเข้ามาผ่าน body
+  let user = req.body
+  user.id = counter //เพิ่มให้ user มี id เป็น atb
+
+  counter += 1 //นับ id 
+  console.log('user', user)
+
+  //เอาข้อมูลไปเก็บใน array
+  users.push(user)
+  res.json({
+    message: 'add ok',
+    user: user //show json ที่ส่งเข้ามา
+  })
+
+  //output terminal
+  res.send(req.body)
+})
+
+// path = PUT /user/:id (:id = parameter)
+app.put('/user/:id', (req, res) => {
+  let id = req.params.id //params ใช้ได้กับทุก method
+  let updateUser = req.body
+
+  //หา user จาก id ที่ส่งมา
+  let selectedIndex = users.findIndex(user => user.id == id)
+ 
+  //เหลือบรรทัดเดียวได้แบบข้างบน
+  /*let selectedIndex = users.findIndex(user => {
+    if (user.id == id) {
+      return true
+    } else {
+      return false
+    }
+  })*/
+
+    //update ข้อมูล user (null || 'ค่าที่ update')
+  users[selectedIndex].firstname = updateUser.firstname || users[selectedIndex].firstname 
+  users[selectedIndex].lastname = updateUser.lastname || users[selectedIndex].lastname
+
+  //ส่งข้อมูลที่ update เสร็จแล้วกลับไป
+  res.json({
+    message: 'update user complete!',
+    data: {
+      user: updateUser,
+      indexUpdate: selectedIndex
+    }
+  })
+})
+
+//output terminal
+app.listen(port, (req, res) => {
+  console.log('http server run at ' + port)
+})
+```
+ค่าที่เราอัปเดตไปพอไปเรียก GET มันจะแสดงค่าที่เราอัปเดตไปตรง id ที่เราใส่ไป
+![alt text](img/image-5.png)
 
 ## 4. PATCH - update only fields in resource
-PATCH Method เป็น method ที่ใช้สำหรับการแก้ข้อมูลเดิมในระบบ โดยจะเป็นการเข้าถึงเฉพาะ field ที่ส่งเข้ามาเท่านั้น (แตกต่างกับ PUT ที่ access ทุก field)
+PATCH Method เป็น method ที่ใช้สำหรับการแก้ข้อมูลเดิมในระบบ โดยจ **เป็นการเข้าถึงเฉพาะ field ที่ส่งเข้ามาเท่านั้น**(แตกต่างกับ PUT ที่ access ทุก field)
 ```js
 const express = require('express')
 const app = express()
@@ -612,6 +710,29 @@ app.patch('/user/:id', (req, res) => {
   res.json({ message: 'User updated successfully', user: userToUpdate })
 })
 ```
+**example PATCH 2**
+ไม่มีอะไรมากแค่ตรวจแล้วแก้ทีละฟิลด์แต่อัปเดตออกมาเเล้วก้เหมือนกัน
+```js
+// path = PATCH /user/:id (:id = parameter)
+app.patch('/user/:id', (req, res) => {
+  let id = req.params.id //params ใช้ได้กับทุก method
+  let updateUser = req.body//อ่านค่าที่จะ update
+
+  //หา user จาก id ที่ส่งมา
+  let selectedIndex = users.findIndex(user => user.id == id)
+ 
+   
+  //update ข้อมูล user 
+  //if มีข้อมูลupdate อันไหน ค่อยupdate อันนั้น 
+  if (updateUser.firstname) {
+    users[selectedIndex].firstname = updateUser.firstname
+  }
+  
+  if (updateUser.lastname) {
+    users[selectedIndex].lastname = updateUser.lastname 
+  }
+})
+```
 
 ## 5. DELETE - delete resource
 DELETE Method เป็น method ที่ใช้สำหรับส่งข้อมูลที่ต้องการลบข้อมูล
@@ -638,3 +759,27 @@ app.delete('/user/:index', (req, res) => {
   }
 })
 ```
+**example DELETE 2**
+```js
+// path = DELETE /user/:id
+app.delete('/user/:id', (req, res) => {
+  let id = req.params.id
+
+  //หา user จาก id ที่ส่งมา
+  let selectedIndex = users.findIndex(user => user.id == id)
+
+  //ลบ
+  //delete users[selectedIndex] ลบแบบนี้จะหายไปเลยกลายเป็น NUll ไม่สวย ทำแบบล่างแทน
+
+  //(indexที่จะลบ, จำนวนที่จะลบ)
+  // จะเรียง index ใหม่ให้เลย
+  users.splice(selectedIndex, 1)
+
+  res.json({
+    message: 'delete complete!',
+    indexDelete: selectedIndex
+  })
+})
+```
+มันจะแสดงออกมาแบบนี้ให้เห็นแสดงว่าลบไปแล้ว
+![alt text](img/image-9.png)
