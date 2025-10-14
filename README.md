@@ -11,5 +11,5 @@
  ![alt text](<Node.js/img/Screenshot (102).png>)
 
  หน้า แสดงข้อมูลในฐานข้อมูลทั้งหมดพร้อม Read Update Delete
- ![alt text](<Node.js/img/Screenshot (102).png>)
+ ![alt text](<Node.js/img/Screenshot (101).png>)
 
