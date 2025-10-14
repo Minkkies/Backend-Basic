@@ -56,6 +56,7 @@ npx nodemon index.js
     "express": "^5.1.0" 
   }
 ```
+* ```npm install mysql``` library ที่ node จะคุยกับ MySQL
 
 * อะไรที่รัน powershell ไม่ได้ ให้ลองรันที่ cmd
 
