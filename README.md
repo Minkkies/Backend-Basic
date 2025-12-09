@@ -13,4 +13,4 @@
  หน้า แสดงข้อมูลในฐานข้อมูลทั้งหมดพร้อม Read Update Delete
  ![alt text](<Node.js/img/Screenshot (101).png>)
 
-ก่อนจะไปเรียนรู้ Node.js ให้รู้จัก การส่งข้อมูลของ json ก่อนไปอ่านได้ที่ไฟล์ JasonBasic.md
+ก่อนจะไปเรียนรู้ Node.js ให้รู้จัก การส่งข้อมูลของ json ก่อนไปอ่านได้ที่ไฟล์ [JsonBasic](Backend-Basic/JsonBasic.md)
