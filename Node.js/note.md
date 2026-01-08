@@ -2,6 +2,25 @@
  - Backend คือ สิ่งที่ run อยู่ภายในด้านหลังที่ user ไม่สามารถมองเห็นหรือ access เข้ามาได้ จะใช้สำหรับการคุยกับเครื่อง server และคุยกับฐานข้อมูล (จะแตกต่างกับ Frontend ที่จะเป็นคนคุยกับ user มา)
  - Nodejs คือ runtime environment JS engine สิ่งที่ทำให้ javascript run backend ออกมาได้ เมื่อก่อน javascript เป็นภาษาที่ใช้เพียงแค่ฝั่ง Frontend แต่ปัจจุบันเป็นภาษาที่พัฒนาได้ทั้ง 2 ฝั่งแล้ว = บางคนก็เลยเรียกตัวเองว่าเป็น Fullstack Javascript
 
+## สารบัญ (TOC)
+- [Nodejs และ Backend development คืออะไร ?](#nodejs-และ-backend-development-คืออะไร-)
+- [ทดลองสร้าง server backend](#ทดลองสร้าง-server-backend)
+  - [Hello world nodejs](#hello-world-nodejs)
+- [สร้าง http server](#สร้าง-http-server)
+- [Mysql และ Database](#mysql-และ-database)
+- [ภาษา SQL คืออะไร ?](#ภาษา-sql-คืออะไร-)
+  - [CRUD ใน SQL](#crud-ใน-sql)
+- [รู้จักกับ Rest API](#รู้จักกับ-rest-api)
+- [library: express](#library-express)
+  - [ลองเทียบ code แบบ ใช้ กับ ไม่ใช้ express](#ลองเทียบ-code-แบบ-ใช้-กับ-ไม่ใช้-express)
+- [Rest API method และ JSON](#rest-api-method-และ-json)
+  - [1. GET - retrive information](#1-get---retrive-information)
+  - [JSON คืออะไร ?](#json-คืออะไร-)
+  - [2. POST - create new resource](#2-post---create-new-resource)
+  - [3. PUT - update existing resource](#3-put---update-existing-resource)
+  - [4. PATCH - update only fields in resource](#4-patch---update-only-fields-in-resource)
+  - [5. DELETE - delete resource](#5-delete---delete-resource)
+
 # ทดลองสร้าง server backend
 ## Hello world nodejs
 1. ที่ terminal ให้พิมพ์ "ls" อีกทีจะเจอ folder server ให้ cd
@@ -417,6 +436,12 @@ POST Method เป็น method ที่ใช้สำหรับการเ
 ทำการลง library body-parser
 ```
 npm install body-parser
+```
+> หมายเหตุ: ถ้าใช้ Express 4.16+ สามารถใช้ `app.use(express.json())` แทน `body-parser` ได้โดยไม่ต้องติดตั้งเพิ่ม
+```js
+const express = require('express')
+const app = express()
+app.use(express.json()) // ใช้แทน body-parser สำหรับ JSON
 ```
 เมื่อลงทุกอย่างถูกต้อง
 ```json
